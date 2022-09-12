@@ -12,7 +12,7 @@ export default Title;
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 18,
+    fontSize: 30,
     fontWeight: "bold",
     color: Colors.accent200,
     padding: 12,
