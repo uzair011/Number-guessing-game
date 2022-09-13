@@ -1,5 +1,6 @@
-import { Text, View, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { useState, useEffect } from "react";
+import { Ionicons } from '@expo/vector-icons';
 
 import Title from "../components/ui/Title";
 import NumberContainer from "../components/game/NumberContainer";
@@ -66,14 +67,18 @@ function GameScreen({ userNumber,onGameOver }) {
 
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card>
-        <InstructionText>Higher or Lower</InstructionText>
-        <View>
+        <InstructionText style={styles.InstructionText}>Higher or Lower</InstructionText>
+        <View style={styles.buttonsLayout}>
+          <View style={styles.buttonLayout}>
           <PrimaryButton onPress={nextGuessHandler.bind(this, "higher")}>
-            +
-          </PrimaryButton>
+              <Ionicons name="add-outline" size={24} color="white" />
+            </PrimaryButton>
+          </View>
+          <View style={styles.buttonLayout}>
           <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
-            -
-          </PrimaryButton>
+            <Ionicons name="remove-outline" size={24} color="white" />
+            </PrimaryButton>
+          </View>
         </View>
       </Card>
       {/* <View>Logs</View> */}
@@ -86,6 +91,15 @@ export default GameScreen;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    margin: 24,
+    padding: 24,
   },
+  buttonsLayout: {
+    flexDirection: "row",
+  },
+  buttonLayout: {
+    flex: 1
+  },
+  InstructionText: {
+    marginBottom: 12
+  }
 });
