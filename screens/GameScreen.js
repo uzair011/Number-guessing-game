@@ -13,7 +13,7 @@ import GuessLogItem from "../components/game/GuessLogItem";
 function generateRandomNumberBetween(min, max, exclude) {
   const randomNumber = Math.floor(Math.random() * (max - min)) + min;
 
-  if (randomNumber === exclude) {
+  if (randomNumber === exclude) {     
     return generateRandomNumberBetween(min, max, exclude);
   } else {
     return randomNumber;
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 24,
+    alignItems:"center"
   },
   buttonsLayout: {
     flexDirection: "row",
