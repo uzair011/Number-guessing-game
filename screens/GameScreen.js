@@ -1,4 +1,4 @@
-import { View, StyleSheet, Alert, Text ,FlatList} from "react-native";
+import { View, StyleSheet, Alert ,FlatList, useWindowDimensions} from "react-native";
 import { useState, useEffect } from "react";
 import { Ionicons } from '@expo/vector-icons';
 
@@ -31,7 +31,7 @@ function GameScreen({ userNumber,onGameOver }) {
   );
   const [currentGuess, setCurrentGuess] = useState(initialGuess)
   const [guessRounds, setGuessRounds] = useState([initialGuess])
-
+    const {width, height} = useWindowDimensions()
 
   useEffect(() => {
     if (currentGuess === userNumber) {
@@ -70,13 +70,11 @@ function GameScreen({ userNumber,onGameOver }) {
     setGuessRounds(previousGuessRounds => [newRandomNumber, ...previousGuessRounds])
   }
 
-	const guessRoundsListLength = guessRounds.length
-	
-  return (
-    <View style={styles.screen}>
-      {<Title>Opponent's Screen </Title>}
-
-      <NumberContainer>{currentGuess}</NumberContainer>
+  const guessRoundsListLength = guessRounds.length
+  
+	let content = (
+		<>
+    <NumberContainer>{currentGuess}</NumberContainer>
       <Card>
         <InstructionText style={styles.InstructionText}>Higher or Lower</InstructionText>
         <View style={styles.buttonsLayout}>
@@ -92,6 +90,32 @@ function GameScreen({ userNumber,onGameOver }) {
           </View>
         </View>
       </Card>
+	</>
+	)
+
+	if (width > 600) {
+		content = <>
+			{/* <InstructionText style={styles.InstructionText}>Higher or Lower</InstructionText> */}
+			<View style={styles.buttonLayoutWide}>
+			<View style={styles.buttonLayout}>
+          <PrimaryButton onPress={nextGuessHandler.bind(this, "higher")}>
+              <Ionicons name="add-outline" size={24} color="white" />
+            </PrimaryButton>
+          </View>
+				<NumberContainer>{currentGuess}</NumberContainer>
+				<View style={styles.buttonLayout}>
+          <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
+            <Ionicons name="remove-outline" size={24} color="white" />
+            </PrimaryButton>
+          </View>
+				</View>
+		</>
+	}
+	
+  return (
+    <View style={styles.screen}>
+      {<Title>Opponent's Screen </Title>}
+			{content}
       <View style={styles.listContainer}>
         {/* {guessRounds.map(guessRound=><Text key={guessRound}>{guessRound}</Text>)} */}
 			  <FlatList data={guessRounds}
@@ -122,5 +146,9 @@ const styles = StyleSheet.create({
   listContainer: {
 	flex: 1,
 	padding:16
-  }
+	},
+	buttonLayoutWide: {
+		alignItems: "center",
+		flexDirection:"row"
+	}
 });

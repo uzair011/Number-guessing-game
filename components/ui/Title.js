@@ -21,6 +21,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     textAlign: "center",
     borderRadius: 12,
-    maxWidth: "80%"
+    maxWidth: "80%",
+    width: 300,
+    
   },
 });
